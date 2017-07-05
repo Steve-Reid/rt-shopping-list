@@ -8,6 +8,8 @@ import { Notes } from './../api/notes';
 import NoteListHeader from './NoteListHeader';
 import NoteListItem from './NoteListItem';
 import NoteListEmptyItem from './NoteListEmptyItem';
+import NoteListFooter from './NoteListFooter';
+
 
 export const NoteList = (props) => {
   const renderNoteListItems = () => {
@@ -24,6 +26,7 @@ export const NoteList = (props) => {
     <div className="item-list">
       <NoteListHeader />
       {renderNoteListItems()}
+      <NoteListFooter />
     </div>
   );
 };

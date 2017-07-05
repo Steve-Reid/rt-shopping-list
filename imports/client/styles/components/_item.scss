@@ -5,9 +5,18 @@
   overflow-y: scroll;
   width: 100%;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .item-list__header {
+  display: flex;
+  flex-direction: column;
+  padding: $space;
+}
+
+.item-list__footer {
   display: flex;
   flex-direction: column;
   padding: $space;
