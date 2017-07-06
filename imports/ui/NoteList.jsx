@@ -5,7 +5,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 
 import { Notes } from './../api/notes';
-import NoteListHeader from './NoteListHeader';
 import NoteListItem from './NoteListItem';
 import NoteListEmptyItem from './NoteListEmptyItem';
 import NoteListFooter from './NoteListFooter';
@@ -23,9 +22,10 @@ export const NoteList = (props) => {
     });
   };
   return (
-    <div className="item-list">
-      <NoteListHeader />
-      {renderNoteListItems()}
+    <div className="item-list__container">
+      <div className="item-list">
+        {renderNoteListItems()}
+      </div>
       <NoteListFooter />
     </div>
   );
