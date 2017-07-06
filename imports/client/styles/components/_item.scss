@@ -3,20 +3,24 @@
   background-color: white;
   border: 1px solid $grey;
   width: 100%;
-  -webkit-overflow-scrolling: touch;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.item-list__header {
+.item-list__search {
   display: flex;
   flex-direction: column;
   padding: $space;
+  input {
+    margin-bottom: 1rem;
+  }
 }
 
 .item-list {
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .item-list__footer {
