@@ -28,7 +28,7 @@ export class NoteListSearch extends Component {
 }
 
 NoteListSearch.propTypes = {
-  Session: PropTypes.object.isRequired,
+  Session: PropTypes.object
 };
 
 export default createContainer(() => {

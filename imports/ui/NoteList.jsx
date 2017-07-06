@@ -17,10 +17,14 @@ export const NoteList = (props) => {
       return (
         <NoteListEmptyItem />
       );
+    } else if (!props.searchValue) {
+      return props.notes.map(note => <NoteListItem key={note._id} note={note} />);
     }
-    return props.notes.map((note) => {
-      return <NoteListItem key={note._id} note={note} />;
-    });
+
+    return props.notes.filter((note) => {
+      const title = note.title.toLowerCase();
+      return title.includes(props.searchValue);
+    }).map(note => <NoteListItem key={note._id} note={note} />);
   };
   return (
     <div className="item-list__container">
@@ -34,7 +38,8 @@ export const NoteList = (props) => {
 };
 
 NoteList.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  Session: PropTypes.object
 };
 
 export default createContainer(() => {
@@ -47,6 +52,7 @@ export default createContainer(() => {
         ...note,
         selected: note._id === selectedNoteId
       };
-    })
+    }),
+    searchValue: Session.get('searchValue')
   };
 }, NoteList);
