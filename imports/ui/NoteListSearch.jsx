@@ -4,35 +4,23 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 
-export class NoteListSearch extends Component {
-  state = { searchTerm: '' }
+const NoteListSearch = (props) => {
 
-  onSearchChange = (e) => {
-    this.setState({ searchTerm: e.target.value });
-    this.props.Session.set('searchValue', this.state.searchTerm.trim().toLocaleLowerCase());
-  }
-
-  render() {
-    return (
-      <div className="item-list__search">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.state.searchTerm}
-          onChange={this.onSearchChange}
-        />
-      </div>
-    );
-  }
-
-}
-
-NoteListSearch.propTypes = {
-  Session: PropTypes.object
+  return (
+    <div className="item-list__search">
+      <input
+        type="text"
+        placeholder="Search..."
+        value={props.searchTerm}
+        onChange={props.onSearchChange}
+      />
+    </div>
+  );
 };
 
-export default createContainer(() => {
-  return {
-    Session
-  };
-}, NoteListSearch);
+NoteListSearch.propTypes = {
+  onSearchChange: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string
+};
+
+export default NoteListSearch;
