@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
+import Modal from 'react-modal'
 import { browserHistory } from 'react-router';
 
 import { Notes } from './../api/notes';
@@ -10,7 +11,8 @@ import { Notes } from './../api/notes';
 export class Editor extends Component {
   state = {
     title: '',
-    body: ''
+    body: '',
+    isOpen: false
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -42,6 +44,12 @@ export class Editor extends Component {
     this.props.call('notes.update', this.props.note._id, { title });
   }
 
+  cancelDeletNote = () => {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
   render() {
     if (this.props.note) {
       return (
@@ -59,7 +67,35 @@ export class Editor extends Component {
             onChange={this.handleBodyChange}
           />
           <div>
-            <button className="button button--secondary" onClick={this.handleDeleteNote}>Delete Note</button>
+            <button
+              className="button button--secondary"
+              onClick={() => this.setState({ isOpen: true })}
+            >
+              Delete Note
+            </button>
+            <Modal
+              isOpen={this.state.isOpen}
+              contentLabel="Confirn Delete Note"
+              onRequestClose={this.cancelDeletNote}
+              className="boxed-view_box"
+              overlayClassName="boxed-view boxed-view--modal"
+            >
+              <h1>Confirm Delete Note</h1>
+              <h3>(This cannot be undone!)</h3>
+              <button
+                className="button"
+                onClick={this.handleDeleteNote}
+              >
+                DELETE
+              </button>
+              <button
+                type="button"
+                className="button button--secondary"
+                onClick={this.cancelDeletNote}
+              >
+                CANCEL
+              </button>
+            </Modal>
           </div>
         </div>
       );
@@ -75,6 +111,7 @@ export class Editor extends Component {
 }
 
 Editor.propTypes = {
+  isOpen: PropTypes.bool,
   selectedNoteId: PropTypes.string,
   note: PropTypes.shape({
     _id: PropTypes.string,

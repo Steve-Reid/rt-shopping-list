@@ -12,7 +12,9 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .boxed-view_box {
@@ -20,7 +22,9 @@
   border: 1px solid $boxed-view-border-color;
   padding: 2.4rem;
   text-align: center;
-  width: 24rem;
+  width: 31rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .boxed-view_form {
