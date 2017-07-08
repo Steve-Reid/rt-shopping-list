@@ -21,6 +21,7 @@
 .item-list {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  flex-grow: 1;
 }
 
 .item-list__footer {
