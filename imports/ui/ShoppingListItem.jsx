@@ -8,7 +8,7 @@ export const ShoppingListItem = (props) => {
   const className = props.list.selected ? 'item item--selected' : 'item';
   return (
     <div className={className} onClick={() => {
-      props.Session.set('selectedNoteId', props.list._id);
+      props.Session.set('selectedListId', props.list._id);
     }}>
       <h5 className="item__title">{props.list.title || 'Untitled list'}</h5>
       <p className="item__subtitle">{moment(props.list.updatedAt).format('DD/M/YY')}</p>

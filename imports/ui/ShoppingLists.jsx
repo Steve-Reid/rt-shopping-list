@@ -54,14 +54,14 @@ ShoppingLists.propTypes = {
 };
 
 export default createContainer(() => {
-  const selectedNoteId = Session.get('selectedNoteId');
+  const selectedListId = Session.get('selectedListId');
   Meteor.subscribe('lists');
 
   return {
     lists: Lists.find({}, { sort: { updatedAt: -1 } }).fetch().map((list) => {
       return {
         ...list,
-        selected: list._id === selectedNoteId
+        selected: list._id === selectedListId
       };
     })
   };
