@@ -1,16 +1,16 @@
 import React from 'react';
 
 import PrivateHeader from './PrivateHeader';
-import NoteList from './NoteList';
+import ShoppingLists from './ShoppingLists';
 import Editor from './Editor';
 
 export default () => {
   return (
     <div>
-      <PrivateHeader title="Notes" />
+      <PrivateHeader title="RealTime Shopping Lists" />
       <div className="page-content">
         <div className="page-content__sidebar">
-          <NoteList />
+          <ShoppingLists />
         </div>
         <div className="page-content__main">
           <Editor />

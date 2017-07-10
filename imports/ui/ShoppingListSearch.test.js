@@ -4,17 +4,17 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
-import NoteListSearch from './NoteListSearch';
-import { notes } from './../fixtures/fixtures';
+import ShoppingListSearch from './ShoppingListSearch';
+import { list } from './../fixtures/fixtures';
 
 if (Meteor.isClient) {
-  describe('NoteListSearch', function() {
+  describe('ShoppingListSearch', function() {
 
     it('should call onSearchChange on input change', function() {
       const searchValue = '';
       const newSearchValue = 'Make';
       const spy = expect.createSpy();
-      const wrapper = mount(<NoteListSearch searchTerm={searchValue} onSearchChange={spy} />);
+      const wrapper = mount(<ShoppingListSearch searchTerm={searchValue} onSearchChange={spy} />);
 
       wrapper.find('input').simulate('change', {
         target: {

@@ -4,11 +4,11 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
-import { NoteListFooter } from './NoteListFooter';
-import { notes } from './../fixtures/fixtures';
+import { ShoppingListFooter } from './ShoppingListFooter';
+import { lists } from './../fixtures/fixtures';
 
 if (Meteor.isClient) {
-  describe('NoteListFooter', function() {
+  describe('ShoppingListFooter', function() {
     let meteorCall;
     let Session;
 
@@ -19,20 +19,20 @@ if (Meteor.isClient) {
       };
     });
 
-    it('should call meteorCall with notes.insert', function() {
-      const method = 'notes.insert';
-      const wrapper = mount(<NoteListFooter meteorCall={meteorCall} Session={Session} />);
+    it('should call meteorCall with lists.insert', function() {
+      const method = 'lists.insert';
+      const wrapper = mount(<ShoppingListFooter meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
-      meteorCall.calls[0].arguments[1](undefined, notes[0]._id);
+      meteorCall.calls[0].arguments[1](undefined, lists[0]._id);
 
       expect(meteorCall.calls[0].arguments[0]).toBe(method);
-      expect(Session.set).toHaveBeenCalledWith('selectedNoteId', notes[0]._id);
+      expect(Session.set).toHaveBeenCalledWith('selectedListId', lists[0]._id);
     });
 
     it('should not set session for failed insert', function(){
-      const method = 'notes.insert';
-      const wrapper = mount(<NoteListFooter meteorCall={meteorCall} Session={Session} />);
+      const method = 'lists.insert';
+      const wrapper = mount(<ShoppingListFooter meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
       meteorCall.calls[0].arguments[1]('error');

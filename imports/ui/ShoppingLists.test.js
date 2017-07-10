@@ -5,30 +5,30 @@ import expect from 'expect';
 import { mount } from 'enzyme';
 
 import { notes } from './../fixtures/fixtures';
-import { NoteList } from './NoteList';
+import { ShoppingLists } from './ShoppingLists';
 
 
 if (Meteor.isClient) {
-  describe('NoteList', function() {
+  describe('ShoppingList', function() {
 
-    it('should render NoteListItem for each note', function() {
-      const wrapper = mount(<NoteList notes={notes} />);
+    it('should render ShoppingListItem for each note', function() {
+      const wrapper = mount(<ShoppingLists notes={notes} />);
 
-      expect(wrapper.find('NoteListItem').length).toBe(2);
-      expect(wrapper.find('NoteListEmptyItem').length).toBe(0);
+      expect(wrapper.find('ShoppingListItem').length).toBe(2);
+      expect(wrapper.find('ShoppingListEmptyItem').length).toBe(0);
     });
 
-    it('should render NoteListEmptyItem if zero notes', function() {
-      const wrapper = mount(<NoteList notes={[]} />);
+    it('should render ShoppingListEmptyItem if zero notes', function() {
+      const wrapper = mount(<ShoppingLists notes={[]} />);
 
-      expect(wrapper.find('NoteListItem').length).toBe(0);
-      expect(wrapper.find('NoteListEmptyItem').length).toBe(1);
+      expect(wrapper.find('ShoppingListItem').length).toBe(0);
+      expect(wrapper.find('ShoppingListEmptyItem').length).toBe(1);
     });
 
     it('should update the searchTerm on input change', function() {
       const searchValue = '';
       const newSearchValue = 'Make';
-      const wrapper = mount(<NoteList notes={''} />);
+      const wrapper = mount(<ShoppingLists notes={''} />);
       wrapper.setState({ searchTerm: searchValue });
 
 
@@ -44,7 +44,7 @@ if (Meteor.isClient) {
     it('should correctly filter list on search input change', function(){
       const searchValue = '';
       const newSearchValue = 'test';
-      const wrapper = mount(<NoteList notes={notes} />);
+      const wrapper = mount(<ShoppingLists notes={notes} />);
       wrapper.setState({ searchTerm: searchValue });
 
 
@@ -54,7 +54,7 @@ if (Meteor.isClient) {
         }
       });
 
-      expect(wrapper.find('NoteListItem').length).toBe(1);
+      expect(wrapper.find('ShoppingListItem').length).toBe(1);
     });
   });
 

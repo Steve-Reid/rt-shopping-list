@@ -9,11 +9,11 @@ import Dashboard from '../ui/Dashboard';
 import NotFound from '../ui/NotFound';
 
 const onEnterNotePage = (nextState) => {
-  Session.set('selectedNoteId', nextState.params.id);
+  Session.set('selectedListId', nextState.params.id);
 };
 
 const onLeaveNotePage = () => {
-  Session.set('selectedNoteId', undefined);
+  Session.set('selectedListId', undefined);
 };
 
 export const onAuthChange = (isAuthenticated, currentPagePrivacy) => {

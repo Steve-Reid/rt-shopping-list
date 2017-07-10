@@ -3,28 +3,28 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import moment from 'moment';
 
-export const Notes = new Mongo.Collection('notes');
+export const Lists = new Mongo.Collection('lists');
 
 if (Meteor.isServer) {
-  Meteor.publish('notes', function() {
-    return Notes.find({ userId: this.userId });
+  Meteor.publish('lists', function() {
+    return Lists.find({ userId: this.userId });
   });
 }
 
 Meteor.methods({
-  'notes.insert'() {
+  'lists.insert'() {
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
 
-    return Notes.insert({
+    return Lists.insert({
       title: '',
       body: '',
       userId: this.userId,
       updatedAt: moment().valueOf() // new Date().getTime()
     });
   },
-  'notes.remove'(_id) {
+  'lists.remove'(_id) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
@@ -36,9 +36,9 @@ Meteor.methods({
       }
     }).validate({ _id });
 
-    Notes.remove({ _id, userId: this.userId });
+    Lists.remove({ _id, userId: this.userId });
   },
-  'notes.update'(_id, updates) {
+  'lists.update'(_id, updates) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
@@ -61,7 +61,7 @@ Meteor.methods({
       ...updates
     });
 
-    Notes.update({
+    Lists.update({
       _id,
       userId: this.userId
     }, {

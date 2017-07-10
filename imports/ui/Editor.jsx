@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import Modal from 'react-modal'
 import { browserHistory } from 'react-router';
 
-import { Notes } from './../api/notes';
+import { Lists } from './../api/lists';
 
 export class Editor extends Component {
   state = {
@@ -16,13 +16,13 @@ export class Editor extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    const currentNoteId = this.props.note ? this.props.note._id : undefined;
-    const prevNoteId = prevProps.note ? prevProps.note._id : undefined;
+    const currentListId = this.props.list ? this.props.list._id : undefined;
+    const prevListId = prevProps.list ? prevProps.list._id : undefined;
 
-    if (currentNoteId && currentNoteId !== prevNoteId) {
+    if (currentListId && currentListId !== prevListId) {
       this.setState({
-        title: this.props.note.title,
-        body: this.props.note.body
+        title: this.props.list.title,
+        body: this.props.list.body
       });
     }
   }
@@ -30,34 +30,34 @@ export class Editor extends Component {
   handleBodyChange = (e) => {
     const body = e.target.value;
     this.setState({ body });
-    this.props.call('notes.update', this.props.note._id, { body });
+    this.props.call('lists.update', this.props.list._id, { body });
   }
 
-  handleDeleteNote = (e) => {
-    this.props.call('notes.remove', this.props.note._id);
+  handleDeleteList = (e) => {
+    this.props.call('lists.remove', this.props.list._id);
     this.props.browserHistory.push('/dashboard');
   }
 
   handleTitleChange = (e) => {
     const title = e.target.value;
     this.setState({ title });
-    this.props.call('notes.update', this.props.note._id, { title });
+    this.props.call('lists.update', this.props.list._id, { title });
   }
 
-  cancelDeletNote = () => {
+  cancelDeleteList = () => {
     this.setState({
       isOpen: false,
     });
   }
 
   render() {
-    if (this.props.note) {
+    if (this.props.list) {
       return (
         <div className="editor">
           <input
             className="editor__title"
             value={this.state.title}
-            placeholder="Title"
+            placeholder="List Title"
             onChange={this.handleTitleChange}
           />
           <textarea
@@ -71,27 +71,27 @@ export class Editor extends Component {
               className="button button--secondary"
               onClick={() => this.setState({ isOpen: true })}
             >
-              Delete Note
+              Delete List
             </button>
             <Modal
               isOpen={this.state.isOpen}
-              contentLabel="Confirn Delete Note"
-              onRequestClose={this.cancelDeletNote}
+              contentLabel="Confirn Delete List"
+              onRequestClose={this.cancelDeleteList}
               className="boxed-view_box"
               overlayClassName="boxed-view boxed-view--modal"
             >
-              <h1>Confirm Delete Note</h1>
+              <h1>Confirm Delete List</h1>
               <h3>(This cannot be undone!)</h3>
               <button
                 className="button"
-                onClick={this.handleDeleteNote}
+                onClick={this.handleDeleteList}
               >
                 DELETE
               </button>
               <button
                 type="button"
                 className="button button--secondary"
-                onClick={this.cancelDeletNote}
+                onClick={this.cancelDeleteList}
               >
                 CANCEL
               </button>
@@ -103,7 +103,7 @@ export class Editor extends Component {
     return (
       <div className="editor">
         <p className="editor__message">
-          {this.props.selectedNoteId ? 'Note not found' : 'Pick or Create a note to get started'}
+          {this.props.selectedListId ? 'Note not found' : 'Pick or Create a list to get started'}
         </p>
       </div>
     );
@@ -112,8 +112,8 @@ export class Editor extends Component {
 
 Editor.propTypes = {
   isOpen: PropTypes.bool,
-  selectedNoteId: PropTypes.string,
-  note: PropTypes.shape({
+  selectedListId: PropTypes.string,
+  list: PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
     body: PropTypes.string,
@@ -125,11 +125,11 @@ Editor.propTypes = {
 };
 
 export default createContainer(() => {
-  const selectedNoteId = Session.get('selectedNoteId');
+  const selectedListId = Session.get('selectedListId');
 
   return {
-    selectedNoteId,
-    note: Notes.findOne(selectedNoteId),
+    selectedListId,
+    list: Lists.findOne(selectedListId),
     call: Meteor.call,
     browserHistory
   };

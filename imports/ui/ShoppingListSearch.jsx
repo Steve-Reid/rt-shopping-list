@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 
-const NoteListSearch = (props) => {
+const ShoppingListSearch = (props) => {
 
   return (
     <div className="item-list__search">
@@ -18,9 +18,9 @@ const NoteListSearch = (props) => {
   );
 };
 
-NoteListSearch.propTypes = {
+ShoppingListSearch.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   searchTerm: PropTypes.string
 };
 
-export default NoteListSearch;
+export default ShoppingListSearch;

@@ -4,21 +4,21 @@ import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
-export const NoteListItem = (props) => {
-  const className = props.note.selected ? 'item item--selected' : 'item';
+export const ShoppingListItem = (props) => {
+  const className = props.list.selected ? 'item item--selected' : 'item';
   return (
     <div className={className} onClick={() => {
-      props.Session.set('selectedNoteId', props.note._id);
+      props.Session.set('selectedNoteId', props.list._id);
     }}>
-      <h5 className="item__title">{props.note.title || 'Untitled note'}</h5>
-      <p className="item__subtitle">{moment(props.note.updatedAt).format('DD/M/YY')}</p>
+      <h5 className="item__title">{props.list.title || 'Untitled list'}</h5>
+      <p className="item__subtitle">{moment(props.list.updatedAt).format('DD/M/YY')}</p>
     </div>
   );
 };
 
-NoteListItem.propTypes = {
+ShoppingListItem.propTypes = {
   Session: PropTypes.object.isRequired,
-  note: PropTypes.shape({
+  list: PropTypes.shape({
     _id: PropTypes.string,
     title: PropTypes.string,
     updatedAt: PropTypes.number,
@@ -28,4 +28,4 @@ NoteListItem.propTypes = {
 
 export default createContainer(() => {
   return { Session };
-}, NoteListItem);
+}, ShoppingListItem);

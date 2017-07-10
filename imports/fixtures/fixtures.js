@@ -1,4 +1,4 @@
-export const notes = [{
+export const lists = [{
   _id: 'noteId123',
   title: 'Test Title',
   body: '',

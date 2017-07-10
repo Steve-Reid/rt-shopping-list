@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 
-export const NoteListFooter = (props) => {
+export const ShoppingListFooter = (props) => {
   return (
     <div className="item-list__footer">
       <button className="button button--primary" onClick={() => {
-        props.meteorCall('notes.insert', (err, res) => {
+        props.meteorCall('lists.insert', (err, res) => {
           if (res) {
-            props.Session.set('selectedNoteId', res);
+            props.Session.set('selectedListId', res);
           }
         });
-      }}>New Note</button>
+      }}>New List</button>
     </div>
   );
 };
 
-NoteListFooter.propTypes = {
+ShoppingListFooter.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired
 };
@@ -28,4 +28,4 @@ export default createContainer(() => {
     meteorCall: Meteor.call,
     Session
   };
-}, NoteListFooter);
+}, ShoppingListFooter);
