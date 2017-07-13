@@ -11,8 +11,9 @@ import { ShoppingLists } from './ShoppingLists';
 if (Meteor.isClient) {
   describe('ShoppingLists', function() {
 
-    it('should render ShoppingListItem for each note', function() {
+    it('should render ShoppingListItem for each list', function() {
       const wrapper = mount(<ShoppingLists lists={lists} />);
+      console.log('lists: ', lists);
 
       expect(wrapper.find('ShoppingListItem').length).toBe(2);
       expect(wrapper.find('ShoppingListEmptyItem').length).toBe(0);

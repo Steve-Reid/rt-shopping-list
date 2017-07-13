@@ -45,25 +45,12 @@ if (Meteor.isClient) {
     //   expect(browserHistory.push).toHaveBeenCalledWith('/dashboard');
     // });
 
-    it('should update the list body on textarea change', function() {
-      const newBody = 'This is the updated body text';
-      const wrapper = mount(<Editor browserHistory={browserHistory} call={call} selectedListId={lists[0]._id} list={lists[0]} />);
-
-      wrapper.find('textarea').simulate('change', {
-        target: {
-          value: newBody
-        }
-      });
-
-      expect(wrapper.state('body')).toBe(newBody);
-      expect(call).toHaveBeenCalledWith('lists.update', lists[0]._id, { body: newBody });
-    });
 
     it('should update the list title on input change', function() {
       const newTitle = 'New Title';
       const wrapper = mount(<Editor browserHistory={browserHistory} call={call} selectedListId={lists[0]._id} list={lists[0]} />);
 
-      wrapper.find('input').simulate('change', {
+      wrapper.find('.editor__title').simulate('change', {
         target: {
           value: newTitle
         }
