@@ -6,13 +6,16 @@ import { Meteor } from 'meteor/meteor';
 import Modal from 'react-modal'
 import { browserHistory } from 'react-router';
 
+import ListItemList from './ListItemList';
 import { Lists } from './../api/lists';
+import { Items } from './../api/items';
 
 export class Editor extends Component {
   state = {
     title: '',
     body: '',
-    isOpen: false
+    isOpen: false,
+    itemBody: ''
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -50,6 +53,22 @@ export class Editor extends Component {
     });
   }
 
+  handleItemBodyChange = (e) => {
+    this.setState({ itemBody: e.target.value });
+  }
+
+  handleAddItem = (e) => {
+    e.preventDefault();
+
+    const itemBody = this.state.itemBody;
+    const listId = this.props.selectedListId;
+
+    if (itemBody) {
+      this.props.call('items.insert', { itemBody, listId });
+      this.setState({ itemBody: ''});
+    }
+  }
+
   render() {
     if (this.props.list) {
       return (
@@ -60,11 +79,11 @@ export class Editor extends Component {
             placeholder="List Title"
             onChange={this.handleTitleChange}
           />
-          <textarea
+          <ListItemList
             className="editor__body"
-            value={this.state.body}
-            placeholder="Note text here"
-            onChange={this.handleBodyChange}
+            addItem={this.handleAddItem}
+            addItemChange={this.handleItemBodyChange}
+            itemBody={this.state.itemBody}
           />
           <div>
             <button

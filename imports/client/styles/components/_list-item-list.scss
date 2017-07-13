@@ -1,0 +1,9 @@
+.list-item-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item-list__scroll {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}

@@ -3,27 +3,44 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import moment from 'moment';
 
-export const Lists = new Mongo.Collection('lists');
+export const Items = new Mongo.Collection('items');
 
 if (Meteor.isServer) {
-  Meteor.publish('lists', function() {
-    return Lists.find({ userId: this.userId });
+  Meteor.publish('items', function() {
+    return Items.find({ userId: this.userId });
   });
 }
 
 Meteor.methods({
-  'lists.insert'() {
+  'items.insert'({ itemBody, listId }) {
+    console.log('itemBody: ', itemBody);
+    console.log('listId: ', listId);
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
 
-    return Lists.insert({
-      title: '',
+    new SimpleSchema({
+      itemBody: {
+        type: String,
+        min: 2
+      },
+      listId: {
+        type: String
+      }
+    }).validate({
+      itemBody,
+      listId
+    });
+
+    return Items.insert({
+      itemBody,
+      listId,
+      itemMarked: false,
       userId: this.userId,
-      updatedAt: moment().valueOf() // new Date().getTime()
+      updatedAt: moment().valueOf()
     });
   },
-  'lists.remove'(_id) {
+  'items.remove'({ _id }) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
@@ -35,9 +52,9 @@ Meteor.methods({
       }
     }).validate({ _id });
 
-    Lists.remove({ _id, userId: this.userId });
+    Items.remove({ _id, userId: this.userId });
   },
-  'lists.update'(_id, updates) {
+  'items.update'(_id, updates) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorised');
     }
@@ -47,16 +64,20 @@ Meteor.methods({
         type: String,
         min: 2
       },
-      title: {
+      itemBody: {
         type: String,
-        optional: true,
+        optional: true
+      },
+      itemMarked: {
+        type: Boolean,
+        optional: false
       }
     }).validate({
       _id,
       ...updates
     });
 
-    Lists.update({
+    Items.update({
       _id,
       userId: this.userId
     }, {
